@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atrapa los Cupcakes</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<section id="inicio" class="pantalla">
+    <div class="decoracion decoracion1">🧁</div>
+    <div class="decoracion decoracion2">🍓</div>
+    <div class="decoracion decoracion3">🍰</div>
+
+    <img src="img/logo.png" class="logo" alt="Atrapa los Cupcakes">
+
+    <p class="subtitulo">¡Pequeños cupcakes, grandes aventuras!</p>
+
+    <button id="btnStart" class="boton-principal">START</button>
+
+    <p class="controles">
+        PC: ← → o A / D<br>
+        Celular: arrastra la cesta
+    </p>
+</section>
+
+
+<section id="juego" class="pantalla juego oculto">
+
+    <div class="marcador">
+
+        <div class="dato">
+            <span>PUNTOS</span>
+            <strong id="puntos">0</strong>
+        </div>
+
+        <div class="dato">
+            <span>META</span>
+            <strong>250</strong>
+        </div>
+
+        <div class="dato">
+            <span>VIDAS</span>
+            <strong id="vidas">3</strong>
+        </div>
+
+        <div class="dato">
+            <span>NIVEL</span>
+            <strong id="nivel">1</strong>
+        </div>
+
+        <div class="dato">
+            <span>TIEMPO</span>
+            <strong id="tiempo">180</strong>
+        </div>
+
+    </div>
+
+    <div class="barra">
+        <div id="progreso"></div>
+    </div>
+
+    <div id="areaJuego" class="area-juego">
+
+        <div class="nube nube1">☁️</div>
+        <div class="nube nube2">☁️</div>
+
+        <div id="mensajeNivel" class="mensaje-nivel oculto">
+            NIVEL 1
+        </div>
+
+        <div id="cesta" class="cesta">
+            <img src="img/cesta.png" alt="Cesta">
+        </div>
+
+    </div>
+
+    <div class="controles-juego">
+        <button id="izquierda">◀</button>
+        <button id="pausa">Ⅱ</button>
+        <button id="derecha">▶</button>
+    </div>
+
+    <p class="leyenda">
+        +10 puntos &nbsp; | &nbsp; -15 puntos y una vida &nbsp; | &nbsp; ¡Pierdes!
+    </p>
+
+</section>
+
+
+<!-- =========================
+     VENTANA INSTRUCCIONES
+========================== -->
+
+<div id="modalInstrucciones" class="modal oculto">
+
+    <div class="tarjeta">
+
+        <button id="cerrarInstrucciones" class="cerrar">×</button>
+
+        <img src="img/cupcake.png" class="icono-modal">
+
+        <h2>¿Cómo jugar?</h2>
+
+        <div class="instrucciones">
+
+            <p>
+                🍰 Atrapa los cupcakes buenos para conseguir
+                <b>10 puntos</b>.
+            </p>
+
+            <p>
+                🥀 Evita los cupcakes podridos. Te quitarán
+                <b>15 puntos y una vida</b>.
+            </p>
+
+            <p>
+                💣 Si atrapas la bomba cupcake,
+                <b>pierdes inmediatamente</b>.
+            </p>
+
+            <p>❤️ Tienes 3 vidas.</p>
+
+            <p>
+                ⚡ Cada nivel aumenta la velocidad y aparecen
+                más obstáculos.
+            </p>
+
+            <p>150 puntos = premio pequeño.</p>
+
+            <p>250 puntos = premio grande.</p>
+
+        </div>
+
+        <div class="consejo">
+            💡 Consejo: ¡no atrapes todo lo que cae!
+            Observa primero qué tipo de cupcake es.
+        </div>
+
+        <button id="btnJugar" class="boton-principal">
+            ¡JUGAR!
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     VENTANA PREMIO PEQUEÑO
+========================== -->
+
+<div id="modalPremioPequeno" class="modal oculto">
+
+    <div class="tarjeta resultado">
+
+        <div class="icono-resultado">🎁</div>
+
+        <h2>¡Conseguiste un premio pequeño!</h2>
+
+        <p>
+            ¡Llegaste a los 150 puntos!
+            ¿Quieres quedarte con este premio
+            o seguir jugando para intentar conseguir
+            el premio mayor de 250 puntos?
+        </p>
+
+        <button id="btnSeguir" class="boton-principal">
+            🧁 SEGUIR JUGANDO
+        </button>
+
+        <button id="btnQuedarse" class="boton-secundario">
+            🎁 QUEDARME CON EL PREMIO
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     VENTANA RESULTADO
+========================== -->
+
+<div id="modalResultado" class="modal oculto">
+
+    <div class="tarjeta resultado">
+
+        <div id="iconoResultado" class="icono-resultado"></div>
+
+        <h2 id="tituloResultado">
+            ¡Felicidades!
+        </h2>
+
+        <p id="textoResultado"></p>
+
+        <div class="puntuacion-final">
+            Puntuación:
+            <strong id="puntuacionFinal">0</strong>
+        </div>
+
+        <button id="btnReintentar" class="boton-principal">
+            JUGAR OTRA VEZ
+        </button>
+
+        <button id="btnInicio" class="boton-secundario">
+            INICIO
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     VENTANA PAUSA
+========================== -->
+
+<div id="modalPausa" class="modal oculto">
+
+    <div class="tarjeta">
+
+        <div class="icono-resultado">⏸️</div>
+
+        <h2>Juego en pausa</h2>
+
+        <button id="continuar" class="boton-principal">
+            CONTINUAR
+        </button>
+
+        <button id="reiniciar" class="boton-secundario">
+            REINICIAR
+        </button>
+
+    </div>
+
+</div>
+
+
+<script src="js/game.js"></script>
+
+</body>
+</html>

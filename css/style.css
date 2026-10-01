@@ -1,0 +1,809 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Quicksand:wght@500;600;700&display=swap');
+
+
+/* =========================
+   COLORES
+========================= */
+
+:root {
+    --rosa: #ed7fa5;
+    --rosa-oscuro: #b94f78;
+    --rosa-claro: #ffdce8;
+
+    --marron: #68443a;
+    --marron-oscuro: #432c26;
+
+    --beige: #fff3e7;
+    --crema: #fffaf5;
+}
+
+
+/* =========================
+   GENERAL
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family: "Quicksand", sans-serif;
+
+    color: var(--marron-oscuro);
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            white 0 5%,
+            transparent 6%
+        ),
+        linear-gradient(
+            135deg,
+            #ffdce8,
+            #f7d6c0,
+            #e9c4b0
+        );
+
+    overflow: hidden;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.oculto {
+    display: none !important;
+}
+
+
+/* =========================
+   PANTALLAS
+========================= */
+
+.pantalla {
+    width: min(1100px, 96vw);
+    height: min(760px, 94vh);
+
+    margin: 3vh auto;
+
+    border: 5px solid white;
+    border-radius: 32px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 25px 70px rgba(70, 40, 30, .25);
+}
+
+
+/* =========================
+   INICIO
+========================= */
+
+#inicio {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            rgba(255, 246, 241, .75),
+            rgba(255, 218, 231, .88)
+        ),
+        url("../img/fondo.png") center / cover;
+}
+
+.logo {
+    position: relative;
+
+    width: min(450px, 78vw);
+    max-height: 300px;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(
+            0 12px 20px rgba(100, 50, 70, .25)
+        );
+}
+
+.subtitulo {
+    font-size: 19px;
+    font-weight: 800;
+
+    color: #754c40;
+
+    margin: 5px 0 25px;
+}
+
+
+/* =========================
+   BOTONES
+========================= */
+
+.boton-principal {
+    border: none;
+
+    padding: 14px 40px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f39bb8,
+            #c85b83
+        );
+
+    color: white;
+
+    font-family: "Baloo 2", sans-serif;
+
+    font-size: 24px;
+    font-weight: 800;
+
+    box-shadow:
+        0 6px 0 #934561,
+        0 12px 25px rgba(140, 60, 90, .25);
+
+    transition: .2s;
+}
+
+.boton-principal:hover {
+    transform: translateY(-4px);
+}
+
+.boton-principal:active {
+    transform: translateY(3px);
+
+    box-shadow:
+        0 3px 0 #934561;
+}
+
+.boton-secundario {
+    border: none;
+
+    padding: 12px 28px;
+
+    border-radius: 15px;
+
+    background: #e8cfc0;
+
+    color: #5d3d34;
+
+    font-weight: 800;
+
+    margin-left: 8px;
+}
+
+.controles {
+    margin-top: 25px;
+
+    font-size: 12px;
+
+    opacity: .7;
+}
+
+
+/* =========================
+   DECORACIONES
+========================= */
+
+.decoracion {
+    position: absolute;
+
+    font-size: 65px;
+
+    opacity: .18;
+
+    animation: flotar 3s infinite alternate;
+}
+
+.decoracion1 {
+    left: 7%;
+    top: 15%;
+}
+
+.decoracion2 {
+    right: 10%;
+    top: 25%;
+    animation-delay: .7s;
+}
+
+.decoracion3 {
+    left: 12%;
+    bottom: 12%;
+    animation-delay: 1s;
+}
+
+@keyframes flotar {
+
+    from {
+        transform: translateY(0) rotate(-5deg);
+    }
+
+    to {
+        transform: translateY(-15px) rotate(5deg);
+    }
+}
+
+
+/* =========================
+   JUEGO
+========================= */
+
+.juego {
+    background: var(--beige);
+
+    padding: 14px;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+/* =========================
+   MARCADOR
+========================= */
+
+.marcador {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 8px;
+}
+
+.dato {
+    background: white;
+
+    border: 2px solid #efc5d3;
+
+    border-radius: 14px;
+
+    padding: 7px;
+
+    text-align: center;
+}
+
+.dato span {
+    display: block;
+
+    font-size: 9px;
+
+    color: #927064;
+
+    font-weight: 700;
+}
+
+.dato strong {
+    display: block;
+
+    font-family: "Baloo 2";
+
+    font-size: 24px;
+
+    color: #a34f70;
+}
+
+
+/* =========================
+   BARRA DE PROGRESO
+========================= */
+
+.barra {
+    height: 10px;
+
+    background: #e8d5ca;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    margin: 9px 0;
+}
+
+#progreso {
+    width: 0%;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #f49ab8,
+            #a94e72
+        );
+
+    transition: .25s;
+}
+
+
+/* =========================
+   ÁREA DEL JUEGO
+========================= */
+
+.area-juego {
+    position: relative;
+
+    flex: 1;
+
+    min-height: 440px;
+
+    overflow: hidden;
+
+    border-radius: 24px;
+
+    border: 4px solid white;
+
+    background:
+        url("../img/fondo.png")
+        center / cover;
+
+    touch-action: none;
+}
+
+.area-juego::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 25px;
+
+    background: rgba(80, 45, 30, .18);
+}
+
+
+/* =========================
+   NUBES
+========================= */
+
+.nube {
+    position: absolute;
+
+    font-size: 65px;
+
+    opacity: .65;
+
+    pointer-events: none;
+
+    animation: nube 8s linear infinite;
+}
+
+.nube1 {
+    top: 7%;
+    left: 8%;
+}
+
+.nube2 {
+    top: 20%;
+    right: 10%;
+
+    animation-delay: -4s;
+}
+
+@keyframes nube {
+
+    50% {
+        transform: translateX(35px);
+    }
+
+}
+
+
+/* =========================
+   CESTA
+========================= */
+
+.cesta {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+
+    width: 145px;
+    height: 105px;
+
+    transform: translateX(-50%);
+
+    z-index: 20;
+
+    filter: drop-shadow(
+        0 9px 6px rgba(50, 30, 20, .30)
+    );
+
+    transition: left 0.08s ease-out;
+}
+
+.cesta img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+
+/* =========================
+   CUPCAKES QUE CAEN
+========================= */
+
+.objeto {
+    position: absolute;
+
+    width: 82px;
+    height: 82px;
+
+    object-fit: contain;
+
+    z-index: 10;
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 7px 5px rgba(60, 40, 30, .25)
+        );
+}
+
+.podrido {
+    animation: temblar .3s infinite alternate;
+}
+
+.bomba {
+    animation: bomba .45s infinite alternate;
+}
+
+@keyframes temblar {
+
+    from {
+        transform: rotate(-5deg);
+    }
+
+    to {
+        transform: rotate(5deg);
+    }
+
+}
+
+@keyframes bomba {
+
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.12) rotate(5deg);
+    }
+
+}
+
+
+/* =========================
+   NIVEL
+========================= */
+
+.mensaje-nivel {
+    position: absolute;
+
+    z-index: 50;
+
+    left: 50%;
+    top: 40%;
+
+    transform: translate(-50%, -50%);
+
+    padding: 12px 30px;
+
+    border-radius: 20px;
+
+    background: rgba(100, 63, 53, .94);
+
+    color: white;
+
+    font-family: "Baloo 2";
+
+    font-size: 32px;
+
+    box-shadow:
+        0 15px 35px rgba(60, 30, 20, .3);
+
+    animation: aparecerNivel 1.5s forwards;
+}
+
+@keyframes aparecerNivel {
+
+    0% {
+        opacity: 0;
+        transform:
+            translate(-50%, -50%)
+            scale(.7);
+    }
+
+    20% {
+        opacity: 1;
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform:
+            translate(-50%, -70%);
+    }
+
+}
+
+
+/* =========================
+   CONTROLES
+========================= */
+
+.controles-juego {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin: 8px;
+}
+
+.controles-juego button {
+    width: 52px;
+    height: 42px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: #f3bfd0;
+
+    color: #6c4050;
+
+    font-size: 18px;
+
+    font-weight: 900;
+}
+
+.leyenda {
+    text-align: center;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    margin: 0 0 2px;
+
+    color: #806357;
+}
+
+
+/* =========================
+   MODALES
+========================= */
+
+.modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: grid;
+
+    place-items: center;
+
+    padding: 18px;
+
+    background: rgba(60, 35, 30, .6);
+
+    backdrop-filter: blur(5px);
+}
+
+.tarjeta {
+    position: relative;
+
+    width: min(560px, 94vw);
+
+    max-height: 90vh;
+
+    overflow: auto;
+
+    padding: 28px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fffaf5,
+            #ffe7ef
+        );
+
+    border: 4px solid white;
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 25px 70px rgba(40, 20, 15, .35);
+}
+
+.cerrar {
+    position: absolute;
+
+    top: 10px;
+    right: 12px;
+
+    width: 38px;
+    height: 38px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f4cbd8;
+
+    color: #82455b;
+
+    font-size: 28px;
+}
+
+.icono-modal {
+    width: 90px;
+    height: 90px;
+
+    object-fit: contain;
+}
+
+.tarjeta h2 {
+    margin: 0 0 12px;
+
+    font-family: "Baloo 2";
+
+    font-size: 42px;
+
+    color: #a95072;
+}
+
+.instrucciones {
+    display: grid;
+
+    gap: 8px;
+
+    text-align: left;
+}
+
+.instrucciones p {
+    margin: 0;
+
+    padding: 10px;
+
+    border-radius: 12px;
+
+    background: rgba(255,255,255,.75);
+
+    font-size: 14px;
+}
+
+.consejo {
+    margin: 14px 0;
+
+    padding: 12px;
+
+    border-radius: 13px;
+
+    background: #f5d5a7;
+
+    font-size: 13px;
+
+    font-weight: 800;
+}
+
+
+/* =========================
+   RESULTADO
+========================= */
+
+.icono-resultado {
+    font-size: 70px;
+}
+
+.resultado p {
+    font-size: 16px;
+
+    font-weight: 700;
+
+    line-height: 1.5;
+}
+
+.puntuacion-final {
+    width: max-content;
+
+    margin: 18px auto;
+
+    padding: 12px 24px;
+
+    border-radius: 15px;
+
+    background: white;
+
+    border: 2px solid #efc5d3;
+
+    font-size: 18px;
+}
+
+.puntuacion-final strong {
+    font-size: 28px;
+
+    color: #a34f70;
+}
+
+
+/* =========================
+   MÓVIL
+========================= */
+
+@media (max-width: 650px) {
+
+    .pantalla {
+        width: 100%;
+        height: 100vh;
+
+        margin: 0;
+
+        border: none;
+
+        border-radius: 0;
+    }
+
+    .marcador {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .dato:last-child {
+        grid-column: span 2;
+    }
+
+    .area-juego {
+        min-height: 55vh;
+    }
+
+    .objeto {
+        width: 68px;
+        height: 68px;
+    }
+
+    .cesta {
+        width: 115px;
+        height: 85px;
+    }
+
+}
+
+#modalPremioPequeno .tarjeta {
+    max-width: 520px;
+}
+
+#modalPremioPequeno .boton-secundario {
+    margin-top: 10px;
+}
