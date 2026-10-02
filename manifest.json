@@ -1,0 +1,9 @@
+{
+  "name": "Atrapa los Cupcakes",
+  "short_name": "Cupcakes",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fff3e7",
+  "theme_color": "#ed7fa5",
+  "orientation": "portrait"
+}
