@@ -26,8 +26,14 @@
     box-sizing: border-box;
 }
 
+html,
 body {
+    width: 100%;
+    max-width: 100%;
     margin: 0;
+}
+
+body {
     min-height: 100vh;
 
     font-family: "Quicksand", sans-serif;
@@ -110,6 +116,9 @@ button {
     max-height: 300px;
 
     object-fit: contain;
+
+    margin-left: auto;
+    margin-right: auto;
 
     filter:
         drop-shadow(
@@ -427,13 +436,16 @@ button {
         0 9px 6px rgba(50, 30, 20, .30)
     );
 
-    transition: left 0.08s ease-out;
+    /* Sin transición para que siga el dedo inmediatamente */
+    transition: none;
 }
 
 .cesta img {
     width: 100%;
     height: 100%;
     object-fit: contain;
+
+    pointer-events: none;
 }
 
 
@@ -517,6 +529,8 @@ button {
     font-family: "Baloo 2";
 
     font-size: 32px;
+
+    white-space: nowrap;
 
     box-shadow:
         0 15px 35px rgba(60, 30, 20, .3);
@@ -764,28 +778,95 @@ button {
 
 @media (max-width: 650px) {
 
-    .pantalla {
+    html,
+    body {
         width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow-x: hidden;
+    }
+
+    .pantalla {
+        width: 100vw;
+        max-width: 100vw;
         height: 100vh;
 
-        margin: 0;
+        margin: 0 auto;
 
         border: none;
 
         border-radius: 0;
     }
 
+    #inicio {
+        width: 100%;
+        max-width: 100%;
+        padding: 15px;
+    }
+
+    .logo {
+        width: min(360px, 82vw);
+        max-width: 82vw;
+
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .subtitulo {
+        font-size: 16px;
+        margin: 4px 0 18px;
+        max-width: 90%;
+    }
+
+    .controles {
+        font-size: 10px;
+        margin-top: 18px;
+    }
+
+    .juego {
+        width: 100%;
+        max-width: 100%;
+        padding: 9px;
+    }
+
     .marcador {
         grid-template-columns:
-            repeat(2, 1fr);
+            repeat(5, 1fr);
+
+        gap: 5px;
+
+        width: 100%;
+    }
+
+    .dato {
+        border-radius: 11px;
+        padding: 5px 3px;
+    }
+
+    .dato span {
+        font-size: 7px;
+    }
+
+    .dato strong {
+        font-size: 19px;
     }
 
     .dato:last-child {
-        grid-column: span 2;
+        grid-column: auto;
+    }
+
+    .barra {
+        height: 8px;
+        margin: 7px 0;
     }
 
     .area-juego {
+        width: 100%;
+        max-width: 100%;
         min-height: 55vh;
+
+        border-radius: 20px;
+        border-width: 3px;
     }
 
     .objeto {
@@ -796,9 +877,98 @@ button {
     .cesta {
         width: 115px;
         height: 85px;
+
+        transition: none;
     }
 
+    .mensaje-nivel {
+        font-size: 21px;
+        padding: 7px 16px;
+        border-radius: 14px;
+        max-width: 75%;
+    }
+
+    .controles-juego {
+        gap: 8px;
+        margin: 6px;
+    }
+
+    .controles-juego button {
+        width: 46px;
+        height: 36px;
+        border-radius: 11px;
+        font-size: 16px;
+    }
+
+    .leyenda {
+        font-size: 9px;
+    }
+
+    .modal {
+        width: 100vw;
+        max-width: 100vw;
+        padding: 12px;
+    }
+
+    .tarjeta {
+        width: 100%;
+        max-width: 94vw;
+        padding: 22px 15px;
+        border-radius: 23px;
+    }
+
+    .tarjeta h2 {
+        font-size: 30px;
+        line-height: 1.05;
+    }
+
+    .icono-modal {
+        width: 70px;
+        height: 70px;
+    }
+
+    .instrucciones p {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .consejo {
+        font-size: 11px;
+        padding: 10px;
+    }
+
+    .boton-principal {
+        font-size: 20px;
+        padding: 11px 28px;
+    }
+
+    /* Solo en el resultado: botones uno debajo del otro */
+    #modalResultado .boton-principal,
+    #modalResultado .boton-secundario {
+        display: block;
+        width: 100%;
+        margin: 10px 0 0;
+    }
+
+    .resultado p {
+        font-size: 14px;
+    }
+
+    .icono-resultado {
+        font-size: 55px;
+    }
+
+    .puntuacion-final {
+        margin: 14px auto;
+        padding: 9px 18px;
+        font-size: 16px;
+    }
+
+    .puntuacion-final strong {
+        font-size: 24px;
+    }
 }
+
 
 #modalPremioPequeno .tarjeta {
     max-width: 520px;
