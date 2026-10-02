@@ -61,6 +61,7 @@ let puntos = 0;
 let vidas = 3;
 let nivel = 1;
 
+// 3 MINUTOS = 180 SEGUNDOS
 let tiempo = 180;
 
 let jugando = false;
@@ -77,14 +78,8 @@ let animacion;
 
 let ultimoTiempo = 0;
 
+// Controla que el aviso de 150 aparezca una sola vez
 let premioPequenoMostrado = false;
-
-// Control de cuenta regresiva
-let cuentaRegresiva = false;
-let temporizadorCuentaRegresiva = null;
-
-// Control del mensaje de nivel
-let temporizadorMensaje = null;
 
 
 // ------------------------------
@@ -120,25 +115,22 @@ btnJugar.addEventListener("click", iniciarJuego);
 
 function iniciarJuego() {
 
-    clearTimeout(temporizadorCuentaRegresiva);
-    clearTimeout(temporizadorMensaje);
-
-    cuentaRegresiva = false;
-
     modalInstrucciones.classList.add("oculto");
     modalResultado.classList.add("oculto");
     modalPausa.classList.add("oculto");
     modalPremioPequeno.classList.add("oculto");
 
-
     inicio.classList.add("oculto");
     juego.classList.remove("oculto");
 
+
+    // Reiniciar variables
 
     puntos = 0;
     vidas = 3;
     nivel = 1;
 
+    // 3 MINUTOS
     tiempo = 180;
 
     posicionCesta = 0.5;
@@ -146,8 +138,11 @@ function iniciarJuego() {
     jugando = true;
     pausado = false;
 
+    // Vuelve a permitir el aviso de 150
     premioPequenoMostrado = false;
 
+
+    // Eliminar objetos anteriores
 
     objetos.forEach(objeto => {
 
@@ -196,6 +191,8 @@ function actualizarMarcador() {
     tiempoTexto.textContent = tiempo;
 
 
+    // 250 PUNTOS = 100% DE PROGRESO
+
     let porcentaje =
         Math.min((puntos / 250) * 100, 100);
 
@@ -210,7 +207,7 @@ function actualizarMarcador() {
 
 function crearCupcake() {
 
-    if (!jugando || pausado || cuentaRegresiva) {
+    if (!jugando || pausado) {
         return;
     }
 
@@ -222,6 +219,8 @@ function crearCupcake() {
     let tipo = "bueno";
 
 
+    // Cupcakes podridos
+
     if (nivel >= 2 && numero < 0.20) {
 
         tipo = "podrido";
@@ -229,12 +228,17 @@ function crearCupcake() {
     }
 
 
+    // Bombas
+
     if (nivel >= 4 && numero < 0.08) {
 
         tipo = "bomba";
 
     }
 
+
+    // A partir de nivel 6
+    // aparecen más bombas
 
     if (nivel >= 6 && numero < 0.14) {
 
@@ -275,6 +279,8 @@ function crearCupcake() {
 
     }
 
+
+    // Posición inicial
 
     let x =
         Math.random() *
@@ -360,6 +366,8 @@ function bucleJuego(ahora) {
                 objeto.movimiento * delta;
 
 
+            // Rebotar horizontalmente
+
             if (
                 objeto.x < 0 ||
                 objeto.x >
@@ -378,6 +386,8 @@ function bucleJuego(ahora) {
                 objeto.y + "px";
 
 
+            // Comprobar si la cesta atrapó el objeto
+
             if (objetoAtrapado(objeto)) {
 
                 objeto.elemento.remove();
@@ -388,6 +398,8 @@ function bucleJuego(ahora) {
 
             }
 
+
+            // Si salió de la pantalla
 
             else if (
                 objeto.y >
@@ -449,6 +461,8 @@ function objetoAtrapado(objeto) {
 function procesarObjeto(objeto) {
 
 
+    // CUPCAKE BUENO
+
     if (objeto.tipo === "bueno") {
 
         puntos += 10;
@@ -461,6 +475,8 @@ function procesarObjeto(objeto) {
 
     }
 
+
+    // CUPCAKE PODRIDO
 
     if (objeto.tipo === "podrido") {
 
@@ -488,6 +504,8 @@ function procesarObjeto(objeto) {
     }
 
 
+    // BOMBA
+
     if (objeto.tipo === "bomba") {
 
         terminarJuego("bomba");
@@ -513,6 +531,7 @@ function procesarObjeto(objeto) {
 
         premioPequenoMostrado = true;
 
+        // Pausar el juego mientras aparece el aviso
         pausado = true;
 
         modalPremioPequeno.classList.remove(
@@ -547,113 +566,11 @@ btnSeguir.addEventListener("click", () => {
         "oculto"
     );
 
-    iniciarCuentaRegresiva();
+    pausado = false;
+
+    ultimoTiempo = performance.now();
 
 });
-
-
-// ------------------------------
-// CUENTA REGRESIVA
-// ------------------------------
-
-function iniciarCuentaRegresiva() {
-
-    if (!jugando) {
-        return;
-    }
-
-    clearTimeout(temporizadorCuentaRegresiva);
-
-    cuentaRegresiva = true;
-    pausado = true;
-
-    // Quitar cupcakes que estaban cayendo
-    // para comenzar limpio después del aviso.
-    objetos.forEach(objeto => {
-
-        objeto.elemento.remove();
-
-    });
-
-    objetos = [];
-
-    // Reiniciar el intervalo para que no
-    // aparezca un cupcake inmediatamente.
-    clearInterval(intervaloObjetos);
-
-
-    const mensaje =
-        document.getElementById("mensajeNivel");
-
-    let numero = 3;
-
-
-    function mostrarCuenta() {
-
-        if (!jugando) {
-            return;
-        }
-
-
-        mensaje.classList.remove("oculto");
-
-        mensaje.textContent =
-            numero;
-
-
-        if (numero > 0) {
-
-            numero--;
-
-            temporizadorCuentaRegresiva =
-                setTimeout(
-                    mostrarCuenta,
-                    800
-                );
-
-        }
-
-        else {
-
-            mensaje.textContent =
-                "¡A JUGAR!";
-
-
-            temporizadorCuentaRegresiva =
-                setTimeout(() => {
-
-                    mensaje.classList.add(
-                        "oculto"
-                    );
-
-                    cuentaRegresiva = false;
-                    pausado = false;
-
-                    ultimoTiempo =
-                        performance.now();
-
-
-                    // Volver a iniciar la caída
-                    // respetando el nivel actual.
-                    intervaloObjetos =
-                        setInterval(
-                            crearCupcake,
-                            Math.max(
-                                300,
-                                720 - nivel * 55
-                            )
-                        );
-
-                }, 800);
-
-        }
-
-    }
-
-
-    mostrarCuenta();
-
-}
 
 
 // ------------------------------
@@ -723,9 +640,6 @@ function mostrarNivel() {
         );
 
 
-    clearTimeout(temporizadorMensaje);
-
-
     mensaje.textContent =
         "⚡ NIVEL " + nivel;
 
@@ -735,14 +649,13 @@ function mostrarNivel() {
     );
 
 
-    temporizadorMensaje =
-        setTimeout(() => {
+    setTimeout(() => {
 
-            mensaje.classList.add(
-                "oculto"
-            );
+        mensaje.classList.add(
+            "oculto"
+        );
 
-        }, 1400);
+    }, 1400);
 
 }
 
@@ -845,7 +758,7 @@ function colocarCesta() {
 
 function moverCesta(direccion) {
 
-    if (!jugando || pausado || cuentaRegresiva) {
+    if (!jugando || pausado) {
         return;
     }
 
@@ -915,13 +828,7 @@ document
     .getElementById("izquierda")
     .addEventListener(
         "pointerdown",
-        evento => {
-
-            evento.preventDefault();
-
-            moverCesta(-0.09);
-
-        }
+        () => moverCesta(-0.09)
     );
 
 
@@ -929,13 +836,7 @@ document
     .getElementById("derecha")
     .addEventListener(
         "pointerdown",
-        evento => {
-
-            evento.preventDefault();
-
-            moverCesta(0.09);
-
-        }
+        () => moverCesta(0.09)
     );
 
 
@@ -950,17 +851,7 @@ areaJuego.addEventListener(
     "pointerdown",
     evento => {
 
-        if (!jugando || pausado || cuentaRegresiva) {
-            return;
-        }
-
-        evento.preventDefault();
-
         arrastrando = true;
-
-        if (areaJuego.setPointerCapture) {
-            areaJuego.setPointerCapture(evento.pointerId);
-        }
 
         moverCestaAlPunto(
             evento.clientX
@@ -974,44 +865,13 @@ areaJuego.addEventListener(
     "pointermove",
     evento => {
 
-        if (!arrastrando) {
-            return;
-        }
+        if (arrastrando) {
 
-        evento.preventDefault();
-
-        moverCestaAlPunto(
-            evento.clientX
-        );
-
-    }
-);
-
-
-areaJuego.addEventListener(
-    "pointerup",
-    evento => {
-
-        arrastrando = false;
-
-        if (
-            areaJuego.releasePointerCapture &&
-            areaJuego.hasPointerCapture(evento.pointerId)
-        ) {
-            areaJuego.releasePointerCapture(
-                evento.pointerId
+            moverCestaAlPunto(
+                evento.clientX
             );
+
         }
-
-    }
-);
-
-
-areaJuego.addEventListener(
-    "pointercancel",
-    () => {
-
-        arrastrando = false;
 
     }
 );
@@ -1059,7 +919,7 @@ function moverCestaAlPunto(x) {
 
 function contarTiempo() {
 
-    if (!jugando || pausado || cuentaRegresiva) {
+    if (!jugando || pausado) {
         return;
     }
 
@@ -1100,7 +960,7 @@ document
 
 function pausarJuego() {
 
-    if (!jugando || cuentaRegresiva) {
+    if (!jugando) {
         return;
     }
 
@@ -1121,8 +981,6 @@ function pausarJuego() {
         modalPausa.classList.add(
             "oculto"
         );
-
-        ultimoTiempo = performance.now();
 
     }
 
@@ -1154,10 +1012,6 @@ function terminarJuego(motivo) {
 
     jugando = false;
 
-    cuentaRegresiva = false;
-
-    clearTimeout(temporizadorCuentaRegresiva);
-    clearTimeout(temporizadorMensaje);
 
     clearInterval(intervaloObjetos);
     clearInterval(intervaloTiempo);
@@ -1200,6 +1054,10 @@ function terminarJuego(motivo) {
         puntos;
 
 
+    // ------------------------------
+    // PREMIO MAYOR: 250 PUNTOS
+    // ------------------------------
+
     if (motivo === "premio") {
 
         icono.textContent = "🏆";
@@ -1212,6 +1070,10 @@ function terminarJuego(motivo) {
 
     }
 
+
+    // ------------------------------
+    // PREMIO PEQUEÑO
+    // ------------------------------
 
     else if (motivo === "premioPequeno") {
 
@@ -1226,6 +1088,10 @@ function terminarJuego(motivo) {
     }
 
 
+    // ------------------------------
+    // BOMBA
+    // ------------------------------
+
     else if (motivo === "bomba") {
 
         icono.textContent = "💥";
@@ -1234,65 +1100,41 @@ function terminarJuego(motivo) {
             "Lo siento, perdiste.";
 
         texto.textContent =
-            "La bomba cupcake cayó dentro de la cesta. ¡Ten más cuidado la próxima vez!";
+            "La bomba cupcake cayó dentro de la cesta. ¡Vuelve a intentarlo!";
 
     }
 
+
+    // ------------------------------
+    // SIN VIDAS
+    // ------------------------------
 
     else if (motivo === "vidas") {
 
-        if (puntos >= 150) {
+        icono.textContent = "😅";
 
-            icono.textContent = "🎁";
+        titulo.textContent =
+            "Lo siento, perdiste.";
 
-            titulo.textContent =
-                "¡Has ganado el segundo premio!";
-
-            texto.textContent =
-                "Perdiste todas tus vidas, pero conseguiste 150 puntos o más para ganar el segundo premio.";
-
-        }
-
-        else {
-
-            icono.textContent = "😅";
-
-            titulo.textContent =
-                "¡Sigue intentando!";
-
-            texto.textContent =
-                "Necesitas conseguir al menos 150 puntos para ganar el segundo premio.";
-
-        }
+        texto.textContent =
+            "Perdiste las 3 vidas antes de conseguir los 250 puntos. ¡Vuelve a intentarlo!";
 
     }
 
 
+    // ------------------------------
+    // SE ACABÓ EL TIEMPO
+    // ------------------------------
+
     else {
 
-        if (puntos >= 150) {
+        icono.textContent = "⏰";
 
-            icono.textContent = "🎁";
+        titulo.textContent =
+            "Se acabó el tiempo";
 
-            titulo.textContent =
-                "¡Has ganado el segundo premio!";
-
-            texto.textContent =
-                "Se acabó el tiempo, pero lograste 150 puntos o más para conseguir el segundo premio.";
-
-        }
-
-        else {
-
-            icono.textContent = "⏰";
-
-            titulo.textContent =
-                "Se acabó el tiempo";
-
-            texto.textContent =
-                "¡Inténtalo nuevamente y trata de llegar a los 150 puntos!";
-
-        }
+        texto.textContent =
+            "No llegaste a los 250 puntos. ¡Vuelve a intentarlo!";
 
     }
 
@@ -1321,10 +1163,6 @@ document
     .addEventListener(
         "click",
         () => {
-
-            clearTimeout(temporizadorCuentaRegresiva);
-
-            cuentaRegresiva = false;
 
             modalResultado.classList.add(
                 "oculto"
